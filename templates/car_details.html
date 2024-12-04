@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        li a {
+            text-decoration: none;
+            color: #333;
+            padding: 350px 20px;
+            border-radius: 4px;
+        }
+
+        .carousel-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        #carCarousel .carousel-control-prev,
+        #carCarousel .carousel-control-next {
+            font-size: 1rem;
+            width: 300px;
+            height: 500px;
+            bottom: 20px;
+        }
+        h1{
+            text-align: center  ;
+        }
+        /* Add this to your existing styles */
+        .comment {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+<header class="bg-dark text-white">
+    <h1>{{ car[1] }} {{ car[2] }} Details</h1>
+</header>
+
+<div class="container">
+    <ul>
+        <li>
+            {% if car[10] %}
+                <div id="carCarousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for photo in car[10].split(',') %}
+                            {% set cleaned_photo = photo.strip('{}') %}
+                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                <img src="{{ url_for('static', filename='car_photos/' + cleaned_photo) }}" class="d-block w-100 {% if loop.first %}active{% endif %}" alt="Car Photo">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+            {% endif %}
+            <p>Class: {{ car[7] }}</p>
+            <p>Engine Volume: {{ car[3] }} L</p>
+            <p>Fuel Consumption: {{ car[4] }} L/100km</p>
+            <p>Trunk Volume: {{ car[5] }} liters</p>
+            <p>Rental Price: ${{ car[6] }}/day</p>
+            <a href="{{ url_for('rent', car_id=car[0]) }}" class="btn btn-primary">Rent</a>
+            <a href="/" class="btn btn-primary">Back</a>
+        </li>
+    </ul>
+</div>
+<h1>Comments</h1>
+<div class="container">
+    <form method="POST">
+        <div>
+            <label for="comment" style="font-size: 30px">Comment:</label>
+            <textarea id="comment" name="comment" required></textarea>
+        </div>
+        <div>
+            <button type="submit">Send</button>
+        </div>
+    </form>
+</div>
+<div class="container">
+    {% if car[10] is defined %}
+        {% for comment in comments %}
+            <div class="comment">
+                <h3>{{ comment[3] }}</h3>
+                <p>{{ comment[1] }}</p>
+                <p>{{ comment[4] }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<div>
+        <a href="/search">Search</a>
+
+        <h2>Available Cars for Rent</h2>
+        <ul>
+            {% for car in cars %}
+                <li>
+                    {{ car[1] }}
+                    <a href="/rent/{{ car[0] }}">Rent</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>

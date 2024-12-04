@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        span{
+            font-size: 30px;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 30px;
+            color: red;
+            font-weight: bold;
+        }
+
+        p{
+            font-size: 40px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Search Results</h1>
+    </div>
+    <div class="container">
+        <p>Showing results for: <strong>{{ search_query }}</strong></p>
+        <ul>
+            {% for car in cars %}
+                <li>
+                    <span>{{ car[1] }} {{ car[2] }}</span>
+                    <span>{% if car[8] %}Available{% else %}Not Available{% endif %}</span>
+                    <a href="/car/{{ car[0] }}">More</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <a class="back-link" href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+</body>
+</html>

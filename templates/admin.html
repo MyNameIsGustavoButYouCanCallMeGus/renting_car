@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-size: 20px;
+            display: block;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: red;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: darkred;
+        }
+
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #cccccc;
+            text-align: center;
+            padding: 14px 80px;
+            text-decoration: none;
+            font-size: 30px;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .container {
+            width: 80%;
+            height: 50%;
+            margin: 0 auto;
+        }
+        input [type="file"],
+        input [type="text"],
+        select [name="car_class"]{
+
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/rentals">Cars & Users</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <h1>Add New Car</h1>
+    <div class="container">
+        <form action="/add" method="post" enctype="multipart/form-data">
+            <label for="car_photos">Car Photos (up to 8):</label>
+                <input type="file" id="car_photos" name="car_photos" accept="image/*" multiple style="display: none;">
+
+            <label for="brand">Car Brand:</label>
+            <input type="text" id="brand" name="brand" required style="height: 50px">
+
+            <label for="model">Car Model:</label>
+            <input type="text" id="model" name="model" required style="height: 50px">
+
+            <label for="engine_volume">Engine Volume:</label>
+            <input type="text" id="engine_volume" name="engine_volume" required style="height: 50px">
+
+            <label for="fuel_consumption">Fuel Consumption:</label>
+            <input type="text" id="fuel_consumption" name="fuel_consumption" required style="height: 50px">
+
+            <label for="trunk_volume">Trunk Volume:</label>
+            <input type="text" id="trunk_volume" name="trunk_volume" required style="height: 50px">
+
+            <label for="rental_price">Rental Price:</label>
+            <input type="text" id="rental_price" name="rental_price" required style="height: 50px">
+
+            <label for="car_class">Car Class:</label>
+            <select id="car_class" name="car_class" required style="height: 50px; font-size: 20px">
+                <option value="economy">Economy</option>
+                <option value="comfort">Comfort</option>
+                <option value="business">Business</option>
+                <option value="premium">Premium</option>
+            </select><br>
+
+            <button type="submit">Add Car</button>
+        </form>
+    </div>
+    <ul>
+    {% for car in cars %}
+        <li>
+            {{ car[1] }} - Available: {{ car[2] }}
+            <a href="/delete/{{ car[0] }}">Delete</a>
+            <a href="/return/{{ car[0] }}">Return</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+
+
+</body>
+</html>

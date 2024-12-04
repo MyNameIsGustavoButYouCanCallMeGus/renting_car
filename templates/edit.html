@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Car</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button, a {
+            background-color: #4caf50;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Car Details</h1>
+    <form action="/edit/{{ car[0] }}" method="post">
+
+        <input type="hidden" name="car_id" value="{{ car[0] }}">
+
+        <label for="car_photos">Car Photos (up to 8):</label>
+            <div id="drag-area" style="border: 2px dashed #ccc; padding: 20px; text-align: center; height: 50px;">
+                <p>Drag and drop files here or click to select files</p>
+                <input type="file" id="car_photos" name="car_photos" accept="image/*" multiple style="display: none;">
+            </div>
+
+        <label for="brand">Car Brand:</label>
+        <input type="text" id="brand" name="brand" value="{{ car[1] }}" required>
+
+        <label for="model">Car Model:</label>
+        <input type="text" id="model" name="model" value="{{ car[2] }}" required>
+
+        <label for="engine_volume">Car Engine Volume:</label>
+        <input type="text" id="engine_volume" name="engine_volume" value="{{ car[3] }}" required>
+
+        <label for="fuel_consumption">Car Fuel Consumption:</label>
+        <input type="text" id="fuel_consumption" name="fuel_consumption" value="{{ car[4] }}" required>
+
+        <label for="trunk_volume">Car Trunk Volume:</label>
+        <input type="text" id="trunk_volume" name="trunk_volume" value="{{ car[5] }}" required>
+
+        <label for="rental_price">Car Rental Price:</label>
+        <input type="text" id="rental_price" name="rental_price" value="{{ car[6] }}" required>
+
+        <label for="car_class">Car Class:</label>
+        <select id="car_class" name="car_class" required>
+            <option value="economy {{ selected if car[7] == economy}}">Economy</option>
+            <option value="comfort {{ selected if car[7] == comfort}}">Comfort</option>
+            <option value="business {{ selected if car[7] == business}}">Business</option>
+            <option value="premium {{ selected if car[7] == premium}}">Premium</option>
+        </select><br>
+
+        <button type="submit">Update Car</button>
+        <a href="/admin">Back</a>
+    </form>
+<script>
+    var dragArea = document.getElementById('drag-area');
+
+    dragArea.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        dragArea.style.border = '2px dashed #000';
+    });
+
+    dragArea.addEventListener('dragleave', function () {
+        dragArea.style.border = '2px dashed #ccc';
+    });
+
+    dragArea.addEventListener('drop', function (e) {
+        e.preventDefault();
+        dragArea.style.border = '2px dashed #ccc';
+
+        var files = e.dataTransfer.files;
+        document.getElementById('car_photos').files = files;
+
+        document.getElementById('uploadForm').submit();
+    });
+
+    dragArea.addEventListener('click', function () {
+        document.getElementById('car_photos').click();
+    });
+
+    document.getElementById('car_photos').addEventListener('change', function () {
+        var fileCount = this.files.length;
+        var message = fileCount > 1 ? fileCount + ' files selected' : fileCount + ' file selected';
+        dragArea.innerHTML = '<p>' + message + '</p>';
+    });
+</script>
+</body>
+</html>

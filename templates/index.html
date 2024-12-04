@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #cccccc;
+            color: #333;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #cccccc;
+            margin: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        li a {
+            text-decoration: none;
+            color: white;
+            background-color: red;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        li a:hover {
+            background-color: darkred;
+        }
+
+        .car {
+            text-align: center;
+            margin: 20px;
+        }
+
+         .car img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-details {
+            margin-top: 10px;
+            color: white;
+            background-color: red;
+        }
+
+        h2,a{
+            color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    {% include 'navbar.html' %}
+</div>
+
+<header>
+    <h1 style="color: #333">Rent & Ride</h1>
+</header>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="car">
+                <h2>Economy</h2>
+                <img src="../static/images/economy_hyundai.png" alt="Эконом машина">
+                <a href="/economy" class="btn btn-details">More</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="car">
+                <h2>Comfort</h2>
+                <img src="../static/images/comfort_honda.png" alt="Комфорт машина">
+                <a href="/comfort" class="btn btn-details">More</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="car">
+                <h2>Business</h2>
+                <img src="../static/images/business_lexus.png" alt="Бизнес машина">
+                <a href="/business" class="btn btn-details">More</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="car">
+                <h2>Premium</h2>
+                <img src="../static/images/premium_bmw.png" alt="Премиум машина">
+                <a href="/premium" class="btn btn-details">More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center">
+    <h2>Available Cars for Rent</h2>
+    <ul>
+        {% for car in cars %}
+        <li>
+            <h1>{{ car[1] }} {{ car[2] }}</h1>
+            <ul>
+        {% if front_images %}
+            {% if loop.index <= front_images|length %}
+                <img src="{{ url_for('static', filename='car_photos/' + front_images[loop.index - 1]) }}" alt="Car Photo">
+            {% endif %}
+        {% endif %}
+            </ul>
+            <p>Class: {{ car[7] }}</p>
+            <p>Engine Volume: {{ car[3] }} L</p>
+            <p>Fuel Consumption: {{ car[4] }} L/100km</p>
+            <p>Trunk Volume: {{ car[5] }} liters</p>
+            <p>Rental Price: ${{ car[6] }}/day</p>
+            <a href="/car/{{ car[0] }}">More</a>
+            <a href="/rent/{{ car[0] }}">Rent</a>
+
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

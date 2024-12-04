@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorted Cars</title>
+</head>
+<body>
+    <h1>Sorted Cars</h1>
+    <p>Sorted by: <strong>{{ sort_parameter }}</strong></p>
+    <ul>
+        {% for car in cars %}
+            <li>{{ car.name }} - {% if car.available %}Available{% else %}Not Available{% endif %}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>
